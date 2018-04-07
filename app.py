@@ -3,10 +3,12 @@ import cf_deployment_tracker
 import os, json
 from cloudant import Cloudant
 import db_controller
+from flask_cors import CORS
 
 cf_deployment_tracker.track()
 
 app = Flask(__name__)
+CORS(app)
 
 db_user_name = 'user'
 db_location_name = 'location'
