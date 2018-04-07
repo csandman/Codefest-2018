@@ -8,7 +8,8 @@ cf_deployment_tracker.track()
 
 app = Flask(__name__)
 
-db_name = 'rumr'
+db_user_name = 'user'
+db_location_name = 'location'
 client = None
 db = None
 
@@ -23,7 +24,8 @@ if 'VCAP_SERVICES' in os.environ:
         password = creds['password']
         url = 'https://' + creds['host']
         client = Cloudant(user, password, url=url, connect=True)
-        db = client.create_database(db_name, throw_on_exists=False)
+        db_user = client.create_database(db_user_name, throw_on_exists=False)
+        db_location = client.create_database(db_location_name, throw_on_exists=False)
 elif os.path.isfile('vcap-local.json'):
     with open('vcap-local.json') as f:
         vcap = json.load(f)
@@ -33,12 +35,13 @@ elif os.path.isfile('vcap-local.json'):
         password = creds['password']
         url = 'https://' + creds['host']
         client = Cloudant(user, password, url=url, connect=True)
-        db = client.create_database(db_name, throw_on_exists=False)
+        db_user = client.create_database(db_user_name, throw_on_exists=False)
+        db_location = client.create_database(db_location_name, throw_on_exists=False)
 
 @app.route('/rumr/api/users', methods=['GET'])
 def get_users():
     if client:
-        return jsonify(db_controller.get_users(db))
+        return jsonify(db_controller.get_users(db_user))
     else:
         print('No database')
         return jsonify([])
@@ -46,7 +49,7 @@ def get_users():
 @app.route('/rumr/api/users/<string:user_id>', methods=['GET'])
 def get_user(user_id):
     if client:
-        return jsonify(db_controller.get_user(db, user_id))
+        return jsonify(db_controller.get_user(db_user, user_id))
     else:
         print('No database')
         return jsonify([])
@@ -54,16 +57,16 @@ def get_user(user_id):
 @app.route('/rumr/api/users', methods=['POST'])
 def put_user():
     user = request.json
-    return db_controller.put_user(db, user)
-    #  if client:
-    #      db.create_document(data)
-    #  else:
-    #      print('No database')
-    #      return jsonify([])
+    return jsonify(db_controller.put_user(db_user, user))
+
+@app.route('/rumr/api/location', methods=['POST'])
+def put_property():
+    location = request.json
+    return jsonify(db_controller.put_location(db_location, location))
 
 @app.route('/rumr/api/match/<string:user_id>', methods=['GET'])
 def get_matches(user_id):
-    matches = db_controller.get_matches(db, user_id)
+    matches = db_controller.get_matches(db_user, db_location, user_id)
     return jsonify(matches)
 
 #  @app.route('/rumr/api/users/<int:user_id>', methods=['PUT'])

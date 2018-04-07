@@ -2,28 +2,36 @@ from flask import jsonify
 from cloudant import Cloudant
 import os, json
 
-def get_doc(db, document):
-    doc = [doc for doc in list(map(lambda doc: doc, db)) if document in doc][0]
-    return doc[document]
+#  def get_doc(db, document):
+#      doc = [doc for doc in list(map(lambda doc: doc, db)) if document in doc][0]
+#      return doc[document]
 
 def get_users(db):
-    users = get_doc(db, 'users')
-    return users
+    for doc in db.get_query_result({'email': {'$eq': 'jbone@uvm.edu'}}):
+        __import__('pprint').pprint(doc)
+    return db.all_docs()
     
 
-def get_user(db, user_id):
-    users = get_users(db)
-    for user in users:
-        if user['_id'] == user_id:
+def get_user(db, user_email):
+    return db.get_query_result({'email': {'$eq': user_email }})[0]
+
+def put_user(db, user):
+    for document in db:
+        if 'users' in document:
+            document['users'].append(user)
+            document.save()
             return user
     return {}
 
-def put_user(db, user):
-    data = {'users': user}
-    #  db.create_document(data)
-    return user
+def put_location(db, location):
+    for document in db:
+        if 'properties' in document:
+            document['properties'].append(location)
+            document.save()
+            return location
+    return {}
 
-def get_matches(db, user_id):
+def get_matches(db_user, db_location, user_id):
     properties = get_doc(db, 'properties')
     matches = []
     return properties
