@@ -1,4 +1,6 @@
 import math
+import json
+
 
 def main():
     
@@ -10,9 +12,15 @@ def main():
     b2 = [10,10,25]
     b3 = [10,50,250]
     
-    comparison(a1, a2, a3, b1, b2, b3)
+    #comparison(a1, a2, a3, b1, b2, b3)
 
+    
+    with open("test1.json") as json_file:
+        data = json.load(json_file)
+        print(json_data)
+    
 
+    
 def comparison(a1, a2, a3, b1, b2, b3):
 
     numerator_a_sum = 0 
@@ -50,9 +58,20 @@ def comparison(a1, a2, a3, b1, b2, b3):
 
     mutual_score = (score_a*score_b)**(1/questions)
 
-    print(mutual_score)
+    return mutual_score
+
+def clean_json( user ) :
+
+    user_personal = (user[2][2]).values()
+    user_desired = (user[2][0]).values()
+    user_importance = (user[2][1]).values()
+
+    return user_personal, user_desired, user_importance
+
+        
+        
     
-    
+
 
 main()
             
