@@ -43,7 +43,7 @@ def get_matches(db_user, db_location, user_id):
     
     #test_user_data = alg.clean_json(primary_user[0])
     #test2 = alg.make_compa
-    locations = get_locations()
+    #locations = get_locations()
     __import__('pprint').pprint(scores)
 
     #  properties = alg.final_comp(primary_user, users)

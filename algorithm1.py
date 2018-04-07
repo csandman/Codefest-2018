@@ -114,15 +114,17 @@ def clean_json(user) :
         
 def make_comparisons(a1, a2, a3, primary_user_id, user_list):
     
-    scores = {}
+    final_list = []
 
     for user in user_list:
+        scores = {}
         if user['email'] != primary_user_id:
             b1, b2, b3 = clean_json(user)
             score_a, score_b, mutual_score = comparison(a1, a2, a3, b1, b2, b3)
             scores[user['email']] = mutual_score
+            final_list.append(scores)
 
-    return scores
+    return final_list
 
 
             
