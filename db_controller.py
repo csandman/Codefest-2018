@@ -36,19 +36,27 @@ def get_matches(db_user, db_location, user_id):
     def get_locations():
         return list(map(lambda doc: doc, db_location))
 
-    #  primary_user = get_user(db_user, user_id)
+    primary_user = get_user(db_user, user_id)
     users = get_users(db_user)
-    locations = get_locations()
+    #__import__('pprint').pprint(users)
 
+    scores = alg.final_comp(primary_user, users)
+    
+    #test_user_data = alg.clean_json(primary_user[0])
+    #test2 = alg.make_compa
+    locations = get_locations()
+    __import__('pprint').pprint(scores)
 
     #  properties = alg.final_comp(primary_user, users)
 
     #  __import__('pprint').pprint(properties)
 
-    __import__('pprint').pprint(users)
-    __import__('pprint').pprint(locations)
+    #__import__('pprint').pprint(users)
+    #__import__('pprint').pprint(primary_user)
+    #__import__('pprint').pprint(scores)
 
-    return {'users': users, 'locations': locations }
+#return {'users': users, 'locations': locations }
+    return scores
 #  def update_user(db, user_id, update):
 #      doc = get_doc(db)
 #      user = [u for u in doc if u['id'] == user_id]
