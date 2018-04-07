@@ -31,14 +31,13 @@ def put_location(db, location):
     db.create_document(location)
     return location
 
+def get_locations(db_location):
+    return list(map(lambda doc: doc, db_location))
+
 def get_matches(db_user, db_location, user_id):
-    
-    def get_locations():
-        return list(map(lambda doc: doc, db_location))
 
     primary_user = get_user(db_user, user_id)
     users = get_users(db_user)
-    #__import__('pprint').pprint(users)
 
     scores = alg.final_comp(primary_user, users)
     

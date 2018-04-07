@@ -61,7 +61,7 @@ def put_user():
     user = request.json
     return jsonify(db_controller.put_user(db_user, user))
 
-@app.route('/rumr/api/users', methods=['PUT'])
+@app.route('/rumr/api/users/update', methods=['POST'])
 def update_user():
     user = request.json
     return jsonify(db_controller.update_user(db_user, user))
@@ -70,6 +70,14 @@ def update_user():
 def put_property():
     location = request.json
     return jsonify(db_controller.put_location(db_location, location))
+
+@app.route('/rumr/api/location', methods=['GET'])
+def get_properties():
+    if client:
+        return jsonify(db_controller.get_locations(db_location))
+    else:
+        print('No Database')
+        return jsonify([])
 
 @app.route('/rumr/api/match/<string:user_id>', methods=['GET'])
 def get_matches(user_id):
