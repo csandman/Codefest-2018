@@ -18,17 +18,21 @@ def put_user(db, user):
     return user
 
 def put_location(db, location):
-    for document in db:
-        if 'properties' in document:
-            document['properties'].append(location)
-            document.save()
-            return location
-    return {}
+    db.create_document(location)
+    return location
 
 def get_matches(db_user, db_location, user_id):
-    properties = get_doc(db, 'properties')
-    matches = []
-    return properties
+    
+    def get_locations():
+        return list(map(lambda doc: doc, db_location))
+
+    users = get_users(db_user)
+    locations = get_locations()
+
+    __import__('pprint').pprint(users)
+    __import__('pprint').pprint(locations)
+
+    return {'users': users, 'locations': locations }
 #  def update_user(db, user_id, update):
 #      doc = get_doc(db)
 #      user = [u for u in doc if u['id'] == user_id]
