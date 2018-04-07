@@ -18,6 +18,9 @@ def put_user(db, user):
     #  db.create_document(data)
     return user
 
+def get_matches(db, user_id):
+    matches = []
+    return user_id
 #  def update_user(db, user_id, update):
 #      doc = get_doc(db)
 #      user = [u for u in doc if u['id'] == user_id]

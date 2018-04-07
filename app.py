@@ -61,6 +61,11 @@ def put_user():
     #      print('No database')
     #      return jsonify([])
 
+@app.route('/rumr/api/match/<string:user_id>', methods=['GET'])
+def get_matches(user_id):
+    matches = db_controller.get_matches(db, user_id)
+    return jsonify({'matches' : matches})
+
 #  @app.route('/rumr/api/users/<int:user_id>', methods=['PUT'])
 #  def update_user(user_id):
 #      update = request.json
