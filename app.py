@@ -74,7 +74,7 @@ def put_property():
 @app.route('/rumr/api/location', methods=['GET'])
 def get_properties():
     if client:
-        return jsonify(db_controller.get_locations(db_location))
+        return jsonify(db_controller.get_locations(db_location, db_user))
     else:
         print('No Database')
         return jsonify([])

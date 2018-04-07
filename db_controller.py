@@ -31,8 +31,12 @@ def put_location(db, location):
     db.create_document(location)
     return location
 
-def get_locations(db_location):
-    return list(map(lambda doc: doc, db_location))
+def get_locations(db_location, db_user):
+    locations = list(map(lambda doc: doc, db_location))
+    for location in locations:
+        location['name'] = get_user(db_user, location['email'])[0]['name']
+
+    return locations
 
 def get_matches(db_user, db_location, user_id):
     
