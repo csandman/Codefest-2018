@@ -1,5 +1,5 @@
 flask
 flask-cors
-cloudant==2.4.0
+cloudant
 numpy
-cf-deployment-tracker==1.0.4
+cf-deployment-tracker
