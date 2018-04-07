@@ -7,21 +7,15 @@ import os, json
 #      return doc[document]
 
 def get_users(db):
-    for doc in db.get_query_result({'email': {'$eq': 'jbone@uvm.edu'}}):
-        __import__('pprint').pprint(doc)
-    return db.all_docs()
-    
+    users = list(map(lambda doc: doc, db))
+    return users
 
 def get_user(db, user_email):
     return db.get_query_result({'email': {'$eq': user_email }})[0]
 
 def put_user(db, user):
-    for document in db:
-        if 'users' in document:
-            document['users'].append(user)
-            document.save()
-            return user
-    return {}
+    db.create_document(user)
+    return user
 
 def put_location(db, location):
     for document in db:
