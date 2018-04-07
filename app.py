@@ -9,9 +9,10 @@ app = Flask(__name__)
 
 port = int(os.getenv('PORT', 8000))
 
-@app.route('/')
-def home():
-    return render_template('index.html')
+hello = {'hello': 'world'}
+@app.route('/rumr/api/v1.0/hello', methods=['GET'])
+def hello_world():
+    return jsonify({'test': hello})
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)
