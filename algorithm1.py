@@ -121,7 +121,8 @@ def make_comparisons(a1, a2, a3, primary_user_id, user_list):
         if user['email'] != primary_user_id:
             b1, b2, b3 = clean_json(user)
             score_a, score_b, mutual_score = comparison(a1, a2, a3, b1, b2, b3)
-            scores[user['email']] = mutual_score
+            scores["email"] = user['email']
+            scores['rank'] = mutual_score
             final_list.append(scores)
 
     return final_list
