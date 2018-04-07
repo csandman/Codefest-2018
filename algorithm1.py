@@ -4,22 +4,18 @@ import json
 
 def main():
     
-    a1 = [25,1,25]
-    a2 = [25,1,25]
-    a3 = [250,0,10]
-
-    b1 = [10,10,25]
-    b2 = [10,10,25]
-    b3 = [10,50,250]
+##    a1 = [25,1,25]
+##    a2 = [25,1,25]
+##    a3 = [250,0,10]
+##
+##    b1 = [10,10,25]
+##    b2 = [10,10,25]
+##    b3 = [10,50,250]
     
     #comparison(a1, a2, a3, b1, b2, b3)
-
+   
+    test_users = {'_id':'12345', '_revs':'idk','users':[{'_id':'1111','name':'lindsay','gender': 'F', 'attributes':{'personal':{'cleanliness':1,'outgoing':3,"nightlife":2},'desired':{'cleanliness':3,'outgoing':2,"nightlife":2},'importance':{'cleanliness':5,'outgoing':1,"nightlife":3}}}, {'_id':'2222','name':'cam','gender': 'M', 'attributes':{'personal':{'cleanliness':3,'outgoing':2,"nightlife":1},'desired':{'cleanliness':1,'outgoing':1,"nightlife":1},'importance':{'cleanliness':2,'outgoing':3,"nightlife":4}}}]}
     
-    with open("test1.json") as json_file:
-        data = json.load(json_file)
-        print(json_data)
-    
-
     
 def comparison(a1, a2, a3, b1, b2, b3):
 
