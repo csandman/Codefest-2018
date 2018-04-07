@@ -58,19 +58,32 @@ def comparison(a1, a2, a3, b1, b2, b3):
 
     mutual_score = (score_a*score_b)**(1/questions)
 
-    return mutual_score
+    return score_a, score_b, mutual_score
 
 def clean_json( user ) :
 
-    user_personal = (user[2][2]).values()
-    user_desired = (user[2][0]).values()
-    user_importance = (user[2][1]).values()
+    user_personal = (user['attributes']['personal']).values()
+    user_desired = (user['attributes']['desired']).values()
+    user_importance = (user['attributes']['importance']).values()
 
     return user_personal, user_desired, user_importance
 
         
-        
+def make_comparisons(user_list):
+
+    primary_user = user_list[0]
+    a1, a2, a3 = clean_json(primary_user)
     
+    scores = {}
+    
+    for user in json_data:
+
+        b1, b2, b3 = clean_json(user) 
+        score_a, score_b, mutual_score = comparison(a1, a2, a3, b1, b2, b3)
+        
+        scores[user['_id']] = [score_a, score_b, mutual_score]
+
+    return scores
 
 
 main()
