@@ -7,7 +7,7 @@ def final_comp(p_user, users):
     #scores = make_comparisons(test_users)
     
     a1, a2, a3 = clean_json(p_user)
-    primary_user_id = p_user['_id']
+    primary_user_id = p_user['email']
     
     scores = make_comparisons(a1, a2, a3, primary_user_id, users)
     
@@ -109,11 +109,11 @@ def make_comparisons(a1, a2, a3, primary_user_id, user_list):
     
     scores = {}
 
-    for user in user_list['users']:
-        if user['_id'] != primary_user_id:
+    for user in user_list:
+        if user['email'] != primary_user_id:
             b1, b2, b3 = clean_json(user)
             score_a, score_b, mutual_score = comparison(a1, a2, a3, b1, b2, b3)
-            scores[user['_id']] = [score_a, score_b, mutual_score]
+            scores[user['email']] = [score_a, score_b, mutual_score]
 
     return scores
 
