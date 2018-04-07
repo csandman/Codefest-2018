@@ -61,7 +61,7 @@ def put_user():
     user = request.json
     return jsonify(db_controller.put_user(db_user, user))
 
-@app.route('/rumr/api/users', methods=['PUT'])
+@app.route('/rumr/api/users/update', methods=['POST'])
 def update_user():
     user = request.json
     return jsonify(db_controller.update_user(db_user, user))
