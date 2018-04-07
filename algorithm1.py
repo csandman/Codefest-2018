@@ -1,10 +1,14 @@
 import math
 import json
 
+    
 def final_comp(p_user, users):
     
-    a1, a2, a3 = clean_json(p_user)
-    primary_user_id = p_user['email']
+    #test_users = {'_id':'12345', '_revs':'idk','users':[{'_id':'1111','name':'lindsay','gender': 'F', 'attributes':{'personal':{'cleanliness':1,'outgoing':3,"nightlife":2},'desired':{'cleanliness':3,'outgoing':2,"nightlife":2},'importance':{'cleanliness':5,'outgoing':1,"nightlife":3}}}, {'_id':'2222','name':'cam','gender': 'M', 'attributes':{'personal':{'cleanliness':3,'outgoing':2,"nightlife":1},'desired':{'cleanliness':1,'outgoing':1,"nightlife":1},'importance':{'cleanliness':2,'outgoing':3,"nightlife":4}}}, {'_id':'1131','name':'steve','gender': 'M', 'attributes':{'personal':{'cleanliness':2,'outgoing':2,"nightlife":1},'desired':{'cleanliness':3,'outgoing':1,"nightlife":3},'importance':{'cleanliness':3,'outgoing':5,"nightlife":2}}}]}
+    #scores = make_comparisons(test_users)
+    
+    a1, a2, a3 = clean_json(p_user[0])
+    primary_user_id = p_user[0]['email']
     
     scores = make_comparisons(a1, a2, a3, primary_user_id, users)
     
@@ -12,24 +16,31 @@ def final_comp(p_user, users):
     
     
 def comparison(a1, a2, a3, b1, b2, b3):
-
+    
     numerator_a_sum = 0 
     denominator_a_sum = 0
 
     numerator_b_sum = 0 
     denominator_b_sum = 0
     
-    for i in range(3):
-        
+    for i in range(len(a1)):
+        a1[i] = float(a1[i])
+        a2[i] = float(a2[i])
+        a3[i] = float(a3[i])
+        b1[i] = float(b1[i])
+        b2[i] = float(b2[i])
+        b3[i] = float(b3[i])
         # person b score for a 
         denominator_b = b3[i]
         if (a1[i] <=  b2[i]):
             numerator_b = (a1[i]/b2[i]) * b3[i]
         else:
             numerator_b = denominator_b
-            
+
         numerator_b_sum += numerator_b
         denominator_b_sum += denominator_b
+        
+
 
         # person a score for b
         denominator_a = a3[i]
@@ -59,10 +70,9 @@ def comparison(a1, a2, a3, b1, b2, b3):
 ##    print("num:", numerator_b_sum, "denom", denominator_b_sum)
 ##    print(score_b)
 
-    questions = len(a1)
-
-    mutual_score = (score_a*score_b)**(1/questions)
-
+    questions = float(len(a1))
+    mutual_score = ((score_a+score_b)/2)
+    
     return score_a, score_b, mutual_score
 
 def clean_json(user) :
@@ -104,15 +114,18 @@ def clean_json(user) :
         
 def make_comparisons(a1, a2, a3, primary_user_id, user_list):
     
-    scores = {}
+    final_list = []
 
     for user in user_list:
+        scores = {}
         if user['email'] != primary_user_id:
             b1, b2, b3 = clean_json(user)
             score_a, score_b, mutual_score = comparison(a1, a2, a3, b1, b2, b3)
-            scores[user['email']] = [score_a, score_b, mutual_score]
+            scores["email"] = user['email']
+            scores['rank'] = mutual_score
+            final_list.append(scores)
 
-    return scores
+    return final_list
 
 
             
