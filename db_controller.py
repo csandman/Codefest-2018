@@ -26,7 +26,10 @@ def get_matches(db_user, db_location, user_id):
     def get_locations():
         return list(map(lambda doc: doc, db_location))
 
-    users = get_users(db_user)
+    primary_user = get_user(db, user_id)
+    users = get_users(db)
+    properties = algorithm.final_comp(primary_user, users)
+
     locations = get_locations()
 
     __import__('pprint').pprint(users)
