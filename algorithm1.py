@@ -3,9 +3,6 @@ import json
 
 def final_comp(p_user, users):
     
-    #test_users = {'_id':'12345', '_revs':'idk','users':[{'_id':'1111','name':'lindsay','gender': 'F', 'attributes':{'personal':{'cleanliness':1,'outgoing':3,"nightlife":2},'desired':{'cleanliness':3,'outgoing':2,"nightlife":2},'importance':{'cleanliness':5,'outgoing':1,"nightlife":3}}}, {'_id':'2222','name':'cam','gender': 'M', 'attributes':{'personal':{'cleanliness':3,'outgoing':2,"nightlife":1},'desired':{'cleanliness':1,'outgoing':1,"nightlife":1},'importance':{'cleanliness':2,'outgoing':3,"nightlife":4}}}, {'_id':'1131','name':'steve','gender': 'M', 'attributes':{'personal':{'cleanliness':2,'outgoing':2,"nightlife":1},'desired':{'cleanliness':3,'outgoing':1,"nightlife":3},'importance':{'cleanliness':3,'outgoing':5,"nightlife":2}}}]}
-    #scores = make_comparisons(test_users)
-    
     a1, a2, a3 = clean_json(p_user)
     primary_user_id = p_user['_id']
     

@@ -1,6 +1,7 @@
 from flask import jsonify
 from cloudant import Cloudant
 import os, json
+import algorithm1 as alg
 
 #  def get_doc(db, document):
 #      doc = [doc for doc in list(map(lambda doc: doc, db)) if document in doc][0]
@@ -17,6 +18,15 @@ def put_user(db, user):
     db.create_document(user)
     return user
 
+def update_user(db, user):
+    #  __import__('pprint').pprint((get_user(db, user['email'])))
+    for doc in db:
+        if user['email'] == doc['email']:
+            doc.delete()
+            put_user(db, user)
+            return user
+    return {'error': 'user not found'}
+
 def put_location(db, location):
     db.create_document(location)
     return location
@@ -26,11 +36,14 @@ def get_matches(db_user, db_location, user_id):
     def get_locations():
         return list(map(lambda doc: doc, db_location))
 
-    primary_user = get_user(db, user_id)
-    users = get_users(db)
-    properties = algorithm.final_comp(primary_user, users)
-
+    #  primary_user = get_user(db_user, user_id)
+    users = get_users(db_user)
     locations = get_locations()
+
+
+    #  properties = alg.final_comp(primary_user, users)
+
+    #  __import__('pprint').pprint(properties)
 
     __import__('pprint').pprint(users)
     __import__('pprint').pprint(locations)
