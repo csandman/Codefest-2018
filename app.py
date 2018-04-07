@@ -43,5 +43,41 @@ def get_users():
         print('No database')
         return jsonify([])
 
+@app.route('/rumr/api/users/<string:user_id>', methods=['GET'])
+def get_user(user_id):
+    if client:
+        return db_controller.get_user(db, user_id)
+    else:
+        print('No database')
+        return jsonify([])
+
+@app.route('/rumr/api/users', methods=['POST'])
+def put_user():
+    user = request.json
+    return db_controller.put_user(db, user)
+    #  if client:
+    #      db.create_document(data)
+    #  else:
+    #      print('No database')
+    #      return jsonify([])
+
+#  @app.route('/rumr/api/users/<int:user_id>', methods=['PUT'])
+#  def update_user(user_id):
+#      update = request.json
+#      db_controller.update_user(db, user_id, update)
+#      return get_user(user_id)
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=port, debug=True)
+
+
+
+
+
+
+
+
+
+
+
+
