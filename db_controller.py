@@ -2,16 +2,21 @@ from flask import jsonify
 from cloudant import Cloudant
 import os, json
 
-def get_doc(db):
-    return list(map(lambda doc: doc['users'], db))[0]
+def get_doc(db, document):
+    doc = [doc for doc in list(map(lambda doc: doc, db)) if document in doc][0]
+    return doc[document]
 
 def get_users(db):
-    doc = get_doc(db)
-    return jsonify({ 'users': doc})
+    users = get_doc(db, 'users')
+    return users
+    
 
 def get_user(db, user_id):
-    doc = get_doc(db)
-    return jsonify({ 'users': [u for u in doc if u['_id'] == user_id] })
+    users = get_users(db)
+    for user in users:
+        if user['_id'] == user_id:
+            return user
+    return {}
 
 def put_user(db, user):
     data = {'users': user}
@@ -19,8 +24,9 @@ def put_user(db, user):
     return user
 
 def get_matches(db, user_id):
+    properties = get_doc(db, 'properties')
     matches = []
-    return user_id
+    return properties
 #  def update_user(db, user_id, update):
 #      doc = get_doc(db)
 #      user = [u for u in doc if u['id'] == user_id]

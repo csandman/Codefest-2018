@@ -38,7 +38,7 @@ elif os.path.isfile('vcap-local.json'):
 @app.route('/rumr/api/users', methods=['GET'])
 def get_users():
     if client:
-        return db_controller.get_users(db)
+        return jsonify(db_controller.get_users(db))
     else:
         print('No database')
         return jsonify([])
@@ -46,7 +46,7 @@ def get_users():
 @app.route('/rumr/api/users/<string:user_id>', methods=['GET'])
 def get_user(user_id):
     if client:
-        return db_controller.get_user(db, user_id)
+        return jsonify(db_controller.get_user(db, user_id))
     else:
         print('No database')
         return jsonify([])
@@ -64,7 +64,7 @@ def put_user():
 @app.route('/rumr/api/match/<string:user_id>', methods=['GET'])
 def get_matches(user_id):
     matches = db_controller.get_matches(db, user_id)
-    return jsonify({'matches' : matches})
+    return jsonify(matches)
 
 #  @app.route('/rumr/api/users/<int:user_id>', methods=['PUT'])
 #  def update_user(user_id):
